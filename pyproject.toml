@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "rule-90"
+version = "0.1.0"
+description = ""
+authors = ["AstragoDE <51675359+AstragoDE@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "rule_90"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+rich = "^13.3.1"
+
+
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^2.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
