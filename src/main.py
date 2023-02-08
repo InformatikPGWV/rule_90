@@ -8,7 +8,7 @@ import time
 def pretty_print(rows, delay: float = 0):
     last_row_len = len(rows[-1])
     print_rows = []
-    for row in rows:
+    for row in track(rows, description="Formatting output..."):
         text = ""
         spaces = (last_row_len - len(row)) // 2
         text += spaces * "  "
@@ -32,9 +32,9 @@ def main():
         ]
     #autopep8: on
 
-    runs = IntPrompt.ask("Wie viele Durchläufe?")
+    runs = IntPrompt.ask("Wie viele Durchläufe?", default=10)
     delay = FloatPrompt.ask(
-        "Wie lange soll zwischen den Durchläufen gewartet werden? (in Millisekunden)") / 1000
+        "Wie lange soll zwischen den Durchläufen gewartet werden? (in Millisekunden)", default=0) / 1000
 
     for _ in track(range(runs), description="Generating..."):
         row = rows[-1]
