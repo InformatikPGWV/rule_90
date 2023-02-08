@@ -1,43 +1,28 @@
 from rich import print
+from rich.progress import track
+from rich.prompt import FloatPrompt
+from rich.prompt import IntPrompt
+import time
 
 
-def pretty_print(rows):
-    text = ""
+def pretty_print(rows, delay: float = 0):
     last_row_len = len(rows[-1])
+    print_rows = []
     for row in rows:
+        text = ""
         spaces = (last_row_len - len(row)) // 2
         text += spaces * "  "
-        # text += spaces * "☐"
         for item in row:
             if item == 0:
-                text += "[#0000ff]⬛[/]"
-                # text += "⬛"
+                text += "  "
             else:
-                text += "[#ff0000]⬛[/]"
-                # text += "⬜"
-        # text += spaces * "[#000000]⬛[/]"
-        # text += spaces * "☐"
-        text += "\n"
-    print(text)
+                text += "[#ffffff]⬛[/]"
+        text += spaces * "  "
+        print_rows.append(text)
 
-
-def find_digit(row, idx):
-    left = None
-    right = None
-
-    # find left
-    if idx == 0:
-        left = 0
-    else:
-        left = row[idx-1]
-
-    # find right
-    if idx == len(row)-1:
-        right = 0
-    else:
-        right = row[idx+1]
-
-    return left, right
+    for row in print_rows:
+        print(row)
+        time.sleep(delay)
 
 
 def main():
@@ -47,29 +32,39 @@ def main():
         ]
     #autopep8: on
 
-    for i in range(25):  # ? ROW DURCHLÄUFE
+    runs = IntPrompt.ask("Wie viele Durchläufe?")
+    delay = FloatPrompt.ask(
+        "Wie lange soll zwischen den Durchläufen gewartet werden? (in Millisekunden))") / 1000
+
+    for _ in track(range(runs), description="Generating..."):
         row = rows[-1]
 
         new_row = []
         new_row.append(0)
-        for idx, digit in zip(range(len(row)), row):
+        for idx in range(len(row)):
             left = None
             right = None
 
-            left, right = find_digit(row, idx)
+            # find left
+            if idx == 0:
+                left = 0
+            else:
+                left = row[idx-1]
 
-            # print(left, digit, right)
+            # find right
+            if idx == len(row)-1:
+                right = 0
+            else:
+                right = row[idx+1]
 
             xOR = left ^ right
-            # print(xOR)
 
             new_row.append(xOR)
 
-        # print(new_row)
         new_row.append(0)
         rows.append(new_row)
 
-    pretty_print(rows)
+    pretty_print(rows, delay)
 
 
 if __name__ == "__main__":
