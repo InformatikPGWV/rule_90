@@ -34,7 +34,7 @@ def main():
 
     runs = IntPrompt.ask("Wie viele Durchläufe?")
     delay = FloatPrompt.ask(
-        "Wie lange soll zwischen den Durchläufen gewartet werden? (in Millisekunden))") / 1000
+        "Wie lange soll zwischen den Durchläufen gewartet werden? (in Millisekunden)") / 1000
 
     for _ in track(range(runs), description="Generating..."):
         row = rows[-1]
