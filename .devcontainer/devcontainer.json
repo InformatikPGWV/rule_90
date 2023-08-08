@@ -12,6 +12,16 @@
 		"ghcr.io/devcontainers-contrib/features/poetry:2": {
 			"version": "latest"
 		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"tamasfe.even-better-toml",
+				"ms-python.black-formatter",
+				"ms-python.python",
+				"ms-python.vscode-pylance"
+			]
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
